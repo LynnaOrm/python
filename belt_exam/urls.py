@@ -1,3 +1,4 @@
+#MASTER URLs
 """belt_exam URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,5 +17,7 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^', include('apps.belt_exam.urls'))
+    url(r'^', include('apps.belt_exam.urls')),
+    url(r'^appointments/', include('apps.appointments.urls')),
+
 ]

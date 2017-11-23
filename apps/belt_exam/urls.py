@@ -5,10 +5,8 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^login$', views.login),
     url(r'^register$', views.register),
-    url(r'^appointments$', views.appointments),
+    # url(r'^appointments/$', views.appointments), #appt
     url(r'^logout$', views.logout)
-    #url(r'^tasks/(?P<tasks_id>\d+)/edit$', views.edit),
-    #url(r'^tasks/(?P<tasks_id>\d+)/update$', views.update),
 
 
 ]

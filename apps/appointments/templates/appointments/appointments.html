@@ -27,25 +27,34 @@
         </div>
         {% endif %}
         
-        <div id="appointments">
+        <div id="main_appointments">
             <h3>Here are your appointments for today!</h3>
 
             <table>
                 <thead>
                     <tr>
                         <th>Tasks</th>
+                        <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
 
+                {% for todays_appt in todays_appts %}
                 <tr>
                     <td>{{todays_appt.tasks}}</td>
+                    <td>{{todays_appt.date}}</td>
                     <td>{{todays_appt.time}}</td>
                     <td>{{todays_appt.status}}</td>
-            
-                </tr>    
+                    {% if todays_appt.status == "pending" %}
+                    <td><a href="/appointments/edit_appt/{{todays_appt.id}}">Edit</a> | <a href="/appointments/delete_appt/{{todays_appt.id}}">Delete</a></td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+   
             </table>
         </div>
 
@@ -54,21 +63,37 @@
             <h3>Your Other appointments</h3>
             
             <table>
-                    <thead>
-                        <tr>
-                            <th>Tasks</th>
-                            <th>date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
+                <thead>
+                    <tr>
+                        <th>Tasks</th>
+                        <th>date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                {% if appts %}
+                    {% for appt in appts %}
+				    <tr>
+						<td>{{appt.tasks}}</td>
+						<td>{{appt.date}}</td>
+						<td>{{appt.time}}</td>
+					</tr>
+                    {% endfor %}
+                {% endif %}
             </table>
         </div>
 
 
         <div id="add">
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="alert">{{message.message}}</p>
+                {% endfor %}
+            {% endif %}
+
             <h3>Add Appointment</h3>
 
-            <form action= "/add" method="POST">
+            <form action= "/appointments/add_appt" method="POST">
+                {% csrf_token %}
                 <lable for="date">Date:</lable>
                 <input type="date" name="date" value="">
                 <br>
@@ -78,11 +103,71 @@
                 <br>
 
                 <lable for="tasks">Tasks</lable>
-                <input type="text" name="text" value="">
+                <input type="text" name="tasks" value="">
                 
                 <input type="submit" value="Add">
 
             </form>
+        </div>
+
+        <div id="new">
+            <h3>New/Added to your Appointments</h3>
+            <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Tasks</th>
+                            <th>date</th>
+                            <th>Time</th>
+                        </tr>
+                        {% if appts %}
+                        {% for appt in join_appts %}
+                        <tr>
+                            <!--{{user.first_name}} DISPLAY??????-->
+                            <td>{{appt.user.first_name}}</td>
+                            <td>{{appt.tasks}}</td>
+                            <td>{{appt.date}}</td>
+                            <td>{{appt.time}}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </thead>
+            </table>        
+        </div>
+
+
+
+        <div id ="Join">
+            <h3>Other Users Appointments</h3>
+            
+            <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Tasks</th>
+                            <th>date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    {% if appts %}
+                        {% for appt in other_appts %}
+                        <tr>
+                            <!--{{user.first_name}} DISPLAY??????-->
+                            <td>{{appt.user.first_name}}</td>
+                            <td>{{appt.tasks}}</td>
+                            <td>{{appt.date}}</td>
+                            <td>{{appt.time}}</td>
+                          
+                            <td><a href="/appointments/join/{{appt.id}}">Join</a> 
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+
+
+
+
+
         </div>
     
     </div>

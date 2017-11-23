@@ -10,15 +10,15 @@ def index(request):
     return render(request,'belt_exam/index.html')
 
 
-def appointments(request):
-    try:
-        request.session['user_id']
-    except KeyError:
-        return redirect('/')
-    context = {
-        'user': User.objects.get(id=request.session['user_id']),
-    }
-    return render(request, 'appointments/appointments.html', context)
+# def appointments(request):
+#     try:
+#         request.session['user_id']
+#     except KeyError:
+#         return redirect('/')
+#     context = {
+#         'user': User.objects.get(id=request.session['user_id']),
+#     }
+#     return render(request, 'appointments/appointments.html', context)
 
 def register(request):
     print request.POST
@@ -29,7 +29,7 @@ def register(request):
         return redirect('/')
     request.session['user_id'] = result.id
     messages.success(request, "Successfully Registered!")
-    return redirect('/success')
+    return redirect('/appointments')
 
 
 def login(request):

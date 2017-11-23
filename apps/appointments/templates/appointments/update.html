@@ -10,9 +10,11 @@
     <div class="wrapper">
         <h4>Edit Tasks</h4>
         
-        <a href="/users">Dashboard</a> | <a href="/users">Logout</a> 
+        <a href="/appointments/">Dashboard</a> | <a href="/">Logout</a> 
 
-        <form action="/users/success" method="POST">
+        <form action="/appointments/update_appt/{{appt.id}}" method="POST"> 
+        <!--this should update task not add.. what is wrong?-->
+
             {% csrf_token %}
             <div class="form-group">
                 <label for="tasks">Tasks:</label>
@@ -20,9 +22,11 @@
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
+                  <select name="status" id="stat">
                     <option value ='Done'>Done</option>
                     <option value ='Pending'>Pending</option>
                     <option value ='Missed'>Missed</option>
+                </select>
 
             </div>
             <div class="form-group">
